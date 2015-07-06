@@ -4,7 +4,6 @@
   "name": "PassGen",
   "description": "Easily generate unique random and secure passwords.",
   "version": "0.1",
-
   
   "browser_action": {
     "default_icon": "icon.png",
@@ -12,6 +11,6 @@
     "default_title": "Generate Password"
   },
 
-  "permissions": [ "clipboardWrite" ]
+  "permissions": [ "clipboardWrite", "storage" ]
   
 }

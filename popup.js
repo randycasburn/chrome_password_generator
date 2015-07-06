@@ -72,15 +72,59 @@ function genPassword() {
     passoutput.select ();
     document.execCommand('copy');
     passoutput.blur ();
+    saveOptions();
 
 }
 
+function saveOptions() {
+  var customchars = document.getElementById('custom').value;
+  var excludechars = document.getElementById('exclude').value;
+  var passlength = document.getElementById('length').value;
+  var numbers = document.getElementById('numbers').checked;
+  var uppercase = document.getElementById('uppercase').checked;
+  var lowercase = document.getElementById('lowercase').checked;
+  chrome.storage.sync.set({
+    customChars: customchars,
+    excludeChars: excludechars,
+    passLength: passlength,
+    numbers: numbers,
+    uppercase: uppercase,
+    lowercase: lowercase
+  }, function() {
+    // Update status to let user know options were saved.
+    
+  });
+}
+
+// Restores select box and checkbox state using the preferences
+// stored in chrome.storage.
+function restore_options() {
+  // Use default value color = 'red' and likesColor = true.
+  chrome.storage.sync.get({
+    customChars: '',
+    excludeChars: '',
+    passLength: '10-14',
+    numbers: true,
+    uppercase: true,
+    lowercase: true
+  }, function(items) {
+    document.getElementById('custom').value = items.customChars;
+    document.getElementById('exclude').value = items.excludeChars;
+    document.getElementById('length').value = items.passLength;
+    document.getElementById('numbers').checked = items.numbers;
+    document.getElementById('uppercase').checked = items.uppercase;
+    document.getElementById('lowercase').checked = items.lowercase;
+  });
+}
+
+ // Add options restore event listener
+document.addEventListener('DOMContentLoaded', restore_options);
 // When the popup HTML has loaded
 window.addEventListener('load', function(evt) {
+
     // Cache a reference to the status display SPAN
     statusDisplay = document.getElementById('status-display');
     // Handle the password generation form submit event with our genpassword function
     document.getElementById('genpassword').addEventListener('submit', genPassword);
-    // Get the event page
     
 });
