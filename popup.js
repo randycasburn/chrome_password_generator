@@ -9,23 +9,23 @@ function genPassword() {
     var pass = "";
 
     //Get specified length or range
-    var passlengthval = document.getElementById('length').value
-    var maxlen = 10
-    var minlen = 10
-    var passlength = 10
+    var passlengthval = document.getElementById('length').value;
+    var maxlen = 10;
+    var minlen = 10;
+    var passlength = 10;
     //Make sure length is a number
     if (passlengthval.value != "" && !isNaN(passlengthval))
     {
-        passlength = parseInt(passlengthval)
+        passlength = parseInt(passlengthval);
     } 
 
     //Check if length is a range
     if (passlengthval.includes("-"))
     {
         //Split into elements
-        var range = passlengthval.split("-")
-        minlen = parseInt(range[0])
-        maxlen = parseInt(range[1])
+        var range = passlengthval.split("-");
+        minlen = parseInt(range[0]);
+        maxlen = parseInt(range[1]);
         if (!isNaN(minlen) && !isNaN(maxlen)) 
         {
             //Pick a number from range
@@ -35,13 +35,27 @@ function genPassword() {
     }
 
     //Get possible characters
-    var customchars = document.getElementById('custom').value
-    var excludechars = document.getElementById('exclude').value
+    var customchars = document.getElementById('custom').value;
+    var excludechars = document.getElementById('exclude').value;
     //Add custom characters
-    var possible = customchars
+    var possible = customchars;
 
     //TODO: Add if check for numbers and uppercase/lowercase characters
-    possible += "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    //Include numbers
+    var numberscb = document.getElementById('numbers');
+    if (numberscb.checked) {
+        possible +=  "0123456789";
+    }
+    //Include lowercase characters
+    var lowercasecb = document.getElementById('lowercase');
+    if (lowercasecb.checked) {
+        possible +=  "abcdefghijklmnopqrstuvwxyz";
+    }
+    //Include uppercase characters
+    var uppercasecb = document.getElementById('uppercase');
+    if (uppercasecb.checked) {
+        possible += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    }
 
     //Remove exclusion characters
     for (var i = 0, len = excludechars.length; i < len; i++) {
