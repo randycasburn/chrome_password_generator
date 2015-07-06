@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+
+  "name": "PassGen Password Generator",
+  "short_name": "PassGen",
+  "description": "Easily generate unique random and secure passwords.",
+  "version": "0.7",
+  "version_name": "Beta 1",
+
+  "icons": { "16": "icon16.png",
+           "48": "icon48.png",
+          "96": "icon96.png" },
+  
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html",
+    "default_title": "Generate Password"
+  },
+
+  "offline_enabled": true,
+
+  "permissions": [ "clipboardWrite", "storage" ]
+  
+}
