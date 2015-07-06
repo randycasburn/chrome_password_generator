@@ -16,6 +16,13 @@
         overflow-x: hidden;
       }
 
+      apptitle {
+        font-family: Roboto, sans-serif; 
+        min-width: 300px;
+        font-size: 14px;
+        overflow-x: hidden;
+      }
+
       hint {
         font-family: Roboto, sans-serif; 
         min-width: 300px;
@@ -23,6 +30,24 @@
         line-height: 18px;
         overflow-x: hidden;
         color: SteelBlue;
+      }
+
+      error {
+        font-family: Roboto, sans-serif; 
+        min-width: 300px;
+        font-size: 12px;
+        line-height: 18px;
+        overflow-x: hidden;
+        color: LightCoral;
+      }
+
+      warning {
+        font-family: Roboto, sans-serif; 
+        min-width: 300px;
+        font-size: 12px;
+        line-height: 18px;
+        overflow-x: hidden;
+        color: SandyBrown;
       }
 
       input#generate {
@@ -40,12 +65,12 @@
   </head>
   <body>
     <form id="genpassword">
-      <p><label for="title">Generate Password</label><br /></p>
+      <p><apptitle for="title">Generate Password</apptitle><br /></p>
       <input type="checkbox" id="uppercase" value="uppercase">Uppercase Characters<br>
       <input type="checkbox" id="lowercase" value="lowercase">Lowercase Characters<br>
       <input type="checkbox" id="numbers" value="numbers">Numbers<br>
       <p><label for="length">Password Length</label><br />
-      <hint>Absolute length (14) or range (10-14)</hint>
+      <hint>Absolute length (14) or range (10-14)</hint><br />
       <input type="text" id="length" size="10" value="" /></p>
       <p><label for="custom">Custom Characters</label><br />
       <input type="text" id="custom" size="30" value="" /></p>
@@ -57,6 +82,9 @@
       </p>
     </form>
     <input type="text" size=30 id="generated_password" value="" readonly><br>
+    <hint id="status"></hint><br>
+    <error id="error"></error>
+    <warning id="warning"></warning><br>
   </body>
 </html>
 

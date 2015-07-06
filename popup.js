@@ -14,13 +14,10 @@ function genPassword() {
     var minlen = 10;
     var passlength = 10;
     //Make sure length is a number
-    if (passlengthval.value != "" && !isNaN(passlengthval))
+    if (passlengthval.value != "" && !isNaN(passlengthval) && passlengthval.length > 0)
     {
         passlength = parseInt(passlengthval);
-    } 
-
-    //Check if length is a range
-    if (passlengthval.includes("-"))
+    } else if (passlengthval.includes("-"))
     {
         //Split into elements
         var range = passlengthval.split("-");
@@ -32,6 +29,9 @@ function genPassword() {
             passlength = Math.floor(Math.random() * (maxlen - minlen + 1)) + minlen;
         }
         
+    } else {
+        showError("Invalid password length")
+        return -1;
     }
 
     //Get possible characters
@@ -73,7 +73,27 @@ function genPassword() {
     document.execCommand('copy');
     passoutput.blur ();
     saveOptions();
+    if (passoutput.value.length < 6) {
+        showWarning('Weak password');
+    }
 
+}
+
+function showError(msg) {
+    var error = document.getElementById('error');
+    error.textContent = msg;
+    setTimeout(function() {
+      error.textContent = '';
+    }, 2000);
+
+}
+
+function showWarning(msg){
+    var warning = document.getElementById('warning');
+    warning.textContent = msg;
+    setTimeout(function() {
+      warning.textContent = '';
+    }, 2000); 
 }
 
 function saveOptions() {
@@ -92,7 +112,12 @@ function saveOptions() {
     lowercase: lowercase
   }, function() {
     // Update status to let user know options were saved.
-    
+    // Update status to let user know options were saved.
+    var status = document.getElementById('status');
+    status.textContent = 'Password copied to clipboard';
+    setTimeout(function() {
+      status.textContent = '';
+    }, 2000);
   });
 }
 
