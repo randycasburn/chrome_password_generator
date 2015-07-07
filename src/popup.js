@@ -2,6 +2,36 @@ function onPageDetailsReceived(pageDetails)  {
     document.getElementById('generated_password').value = pageDetails.password
 }
 
+function genUniqueNumber(minval, maxval) {
+
+    var array = new Uint8Array(5);
+    var random_number = 0;
+    var range = maxval - minval + 1;
+
+    while (1){
+        //Generate random values and check if they fall within range
+        window.crypto.getRandomValues(array);
+        for (var i = 0; i < array.length; i++) {
+            random_number = array[i];
+            if (random_number <= maxval && random_number >= minval) {
+                return random_number;
+            }
+        }
+    }
+}
+
+function genUniqueString(space, length) {
+
+    pass = "";
+
+    //Generate string with specified length
+    for (var i = 0; i < length; i++) {
+        pass += space[genUniqueNumber(0, space.length - 1)]
+    }
+
+    return pass;
+}
+
 function genPassword() {
     // Cancel the form submit
     event.preventDefault();
@@ -31,6 +61,7 @@ function genPassword() {
     {
         //Split into elements
         var range = passlengthval.split("-");
+        range = range.sort(function(a, b){return a-b});
         minlen = parseInt(range[0]);
         maxlen = parseInt(range[1]);
         if (!isNaN(minlen) && !isNaN(maxlen)) 
@@ -38,7 +69,7 @@ function genPassword() {
             //Limit max length
             if (minlen <= MAX_PASS_LEN && maxlen <= MAX_PASS_LEN) {
                 //Pick a number from range
-                passlength = Math.floor(Math.random() * (maxlen - minlen + 1)) + minlen;
+                passlength = genUniqueNumber(minlen, maxlen);
             } else {
                 showError("Password length too long");
                 return -2;
@@ -49,6 +80,7 @@ function genPassword() {
         showError("Invalid password length");
         return -1;
     }
+
 
     //Get possible characters
     var customchars = document.getElementById('custom').value;
@@ -78,18 +110,14 @@ function genPassword() {
         possible = possible.replace(excludechars[i], "");
     }
 
-    for( var i=0; i < passlength; i++ )
-        pass += possible.charAt(Math.floor(Math.random() * possible.length));
-
-
-    
+    pass = genUniqueString(possible, passlength);
     passoutput.value = pass;
     passoutput.focus ();
     passoutput.select ();
     document.execCommand('copy');
     passoutput.blur ();
     saveOptions();
-    if (passoutput.value.length < 6) {
+    if (passoutput.value.length < 8) {
         showWarning('Weak password');
     }
 
@@ -127,7 +155,6 @@ function saveOptions() {
     uppercase: uppercase,
     lowercase: lowercase
   }, function() {
-    // Update status to let user know options were saved.
     // Update status to let user know options were saved.
     var status = document.getElementById('status');
     status.textContent = 'Password copied to clipboard';
