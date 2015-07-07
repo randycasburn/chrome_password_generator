@@ -4,8 +4,8 @@
   "name": "PassGen Password Generator",
   "short_name": "PassGen",
   "description": "Easily generate unique random and secure passwords.",
-  "version": "0.9",
-  "version_name": "Beta 3",
+  "version": "0.9.1",
+  "version_name": "Beta 4",
 
   "icons": { "16": "icon16.png",
            "48": "icon48.png",
