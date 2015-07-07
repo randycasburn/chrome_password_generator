@@ -38,9 +38,8 @@ function genPassword() {
 
     var pass = "";
     var MAX_PASS_LEN = 100;
-    var passoutput = document.getElementById('generated_password')
+    var passoutput = document.getElementById('generated_password');
     passoutput.value= "";
-
     //Get specified length or range
     var passlengthval = document.getElementById('length').value;
     var maxlen = 10;
@@ -117,6 +116,7 @@ function genPassword() {
     document.execCommand('copy');
     passoutput.blur ();
     saveOptions();
+
     if (passoutput.value.length < 8) {
         showWarning('Weak password');
     }
@@ -189,7 +189,9 @@ function restore_options() {
 document.addEventListener('DOMContentLoaded', restore_options);
 // When the popup HTML has loaded
 window.addEventListener('load', function(evt) {
-
+    // Update version label
+    var manifest = chrome.runtime.getManifest();
+    document.getElementById('version').textContent = manifest.version_name;
     // Cache a reference to the status display SPAN
     statusDisplay = document.getElementById('status-display');
     // Handle the password generation form submit event with our genpassword function

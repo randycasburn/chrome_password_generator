@@ -24,6 +24,15 @@
         color: #2f414a;
       }
 
+      appversion {
+        font-family: Roboto, sans-serif; 
+        min-width: 300px;
+        font-size: 12px;
+        line-height: 18px;
+        overflow-x: hidden;
+        color: RosyBrown;
+      }
+
       hint {
         font-family: Roboto, sans-serif; 
         min-width: 300px;
@@ -67,7 +76,7 @@
   <body>
     <img src="graphic.png" alt="GenPass" style="float:right;width:70px;height:70px;padding: 0px 0px 0px 30px">
     <form id="genpassword">
-      <p><apptitle for="title">Generate Password</apptitle><br /></p>
+      <p><apptitle for="title">AppGen</apptitle> <appversion id="version"></appversion><br>
       <input type="checkbox" id="uppercase" value="uppercase">Uppercase Characters<br>
       <input type="checkbox" id="lowercase" value="lowercase">Lowercase Characters<br>
       <input type="checkbox" id="numbers" value="numbers">Numbers<br>
