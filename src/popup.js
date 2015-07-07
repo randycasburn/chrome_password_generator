@@ -7,6 +7,7 @@ function genPassword() {
     event.preventDefault();
 
     var pass = "";
+    var MAX_PASS_LEN = 100;
 
     //Get specified length or range
     var passlengthval = document.getElementById('length').value;
@@ -16,7 +17,14 @@ function genPassword() {
     //Make sure length is a number
     if (passlengthval.value != "" && !isNaN(passlengthval) && passlengthval.length > 0)
     {
-        passlength = parseInt(passlengthval);
+        //Limit max length
+        if (passlengthval <= MAX_PASS_LEN) {
+            passlength = parseInt(passlengthval);
+        } else {
+            showError("Password length too long")
+            return -2;
+        }
+
     } else if (passlengthval.includes("-"))
     {
         //Split into elements
@@ -25,12 +33,18 @@ function genPassword() {
         maxlen = parseInt(range[1]);
         if (!isNaN(minlen) && !isNaN(maxlen)) 
         {
-            //Pick a number from range
-            passlength = Math.floor(Math.random() * (maxlen - minlen + 1)) + minlen;
+            //Limit max length
+            if (minlen <= MAX_PASS_LEN && maxlen <= MAX_PASS_LEN) {
+                //Pick a number from range
+                passlength = Math.floor(Math.random() * (maxlen - minlen + 1)) + minlen;
+            } else {
+                showError("Password length too long");
+                return -2;
+            }
         }
         
     } else {
-        showError("Invalid password length")
+        showError("Invalid password length");
         return -1;
     }
 
