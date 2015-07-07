@@ -8,6 +8,8 @@ function genPassword() {
 
     var pass = "";
     var MAX_PASS_LEN = 100;
+    var passoutput = document.getElementById('generated_password')
+    passoutput.value= "";
 
     //Get specified length or range
     var passlengthval = document.getElementById('length').value;
@@ -80,7 +82,7 @@ function genPassword() {
         pass += possible.charAt(Math.floor(Math.random() * possible.length));
 
 
-    var passoutput = document.getElementById('generated_password')
+    
     passoutput.value = pass;
     passoutput.focus ();
     passoutput.select ();
