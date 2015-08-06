@@ -9,7 +9,7 @@ function genUniqueNumber(minval, maxval) {
     var range = maxval - minval + 1;
 
     while (1){
-        //Generate random values and check if they fall within range
+        // Generate random values and check if they fall within range
         window.crypto.getRandomValues(array);
         for (var i = 0; i < array.length; i++) {
             random_number = array[i];
@@ -40,15 +40,15 @@ function genPassword() {
     var MAX_PASS_LEN = 100;
     var passoutput = document.getElementById('generated_password');
     passoutput.value= "";
-    //Get specified length or range
+    // Get specified length or range
     var passlengthval = document.getElementById('length').value;
     var maxlen = 10;
     var minlen = 10;
     var passlength = 10;
-    //Make sure length is a number
+    // Make sure length is a number
     if (passlengthval.value != "" && !isNaN(passlengthval) && passlengthval.length > 0)
     {
-        //Limit max length
+        // Limit max length
         if (passlengthval <= MAX_PASS_LEN) {
             passlength = parseInt(passlengthval);
         } else {
@@ -58,16 +58,16 @@ function genPassword() {
 
     } else if (passlengthval.includes("-"))
     {
-        //Split into elements
+        // Split into elements
         var range = passlengthval.split("-");
         range = range.sort(function(a, b){return a-b});
         minlen = parseInt(range[0]);
         maxlen = parseInt(range[1]);
         if (!isNaN(minlen) && !isNaN(maxlen)) 
         {
-            //Limit max length
+            // Limit max length
             if (minlen <= MAX_PASS_LEN && maxlen <= MAX_PASS_LEN) {
-                //Pick a number from range
+                // Pick a number from range
                 passlength = genUniqueNumber(minlen, maxlen);
             } else {
                 showError("Password length too long");
@@ -81,30 +81,29 @@ function genPassword() {
     }
 
 
-    //Get possible characters
+    // Get possible characters
     var customchars = document.getElementById('custom').value;
     var excludechars = document.getElementById('exclude').value;
-    //Add custom characters
+    // Add custom characters
     var possible = customchars;
 
-    //TODO: Add if check for numbers and uppercase/lowercase characters
-    //Include numbers
+    // Include numbers
     var numberscb = document.getElementById('numbers');
     if (numberscb.checked) {
         possible +=  "0123456789";
     }
-    //Include lowercase characters
+    // Include lowercase characters
     var lowercasecb = document.getElementById('lowercase');
     if (lowercasecb.checked) {
         possible +=  "abcdefghijklmnopqrstuvwxyz";
     }
-    //Include uppercase characters
+    // Include uppercase characters
     var uppercasecb = document.getElementById('uppercase');
     if (uppercasecb.checked) {
         possible += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     }
 
-    //Remove exclusion characters
+    // Remove exclusion characters
     for (var i = 0, len = excludechars.length; i < len; i++) {
         possible = possible.replace(excludechars[i], "");
     }
