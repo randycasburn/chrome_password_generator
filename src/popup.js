@@ -50,7 +50,7 @@ function genPassword() {
     {
         // Limit max length
         if (passlengthval <= MAX_PASS_LEN) {
-            passlength = parseInt(passlengthval);
+            passlength = parseInt(passlengthval, 10);
         } else {
             showError("Password length too long")
             return -2;
@@ -61,8 +61,8 @@ function genPassword() {
         // Split into elements
         var range = passlengthval.split("-");
         range = range.sort(function(a, b){return a-b});
-        minlen = parseInt(range[0]);
-        maxlen = parseInt(range[1]);
+        minlen = parseInt(range[0], 10);
+        maxlen = parseInt(range[1], 10);
         if (!isNaN(minlen) && !isNaN(maxlen)) 
         {
             // Limit max length
