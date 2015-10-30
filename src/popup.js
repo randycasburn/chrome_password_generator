@@ -46,7 +46,7 @@ function genPassword() {
     var minlen = 10;
     var passlength = 10;
     // Make sure length is a number
-    if (passlengthval.value != "" && !isNaN(passlengthval) && passlengthval.length > 0)
+    if (passlengthval.value !== "" && !isNaN(passlengthval) && passlengthval.length > 0)
     {
         // Limit max length
         if (passlengthval <= MAX_PASS_LEN) {
