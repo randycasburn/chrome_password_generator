@@ -1,5 +1,6 @@
-// Holds view wide settings
-var settings = {};
+// Popup doesn't have access to the Settings singleton
+// settings - local to the popup
+var settings;
 // Holds the output element for the generated password
 var outputElement;
 /**
@@ -9,9 +10,8 @@ var outputElement;
  *
  */
 window.addEventListener('load', function () {
-    outputElement = document.getElementById('generated_password');
     // Listen for the form submission
-    document.getElementById('genpassword').addEventListener('submit', getPassword);
+    document.getElementById('generate').addEventListener('click', getPassword);
     // Record changes to the text settings <inputs>
     document.addEventListener('change', function (e) {
         settings[e.target.id] = (e.target.type === 'checkbox') ? e.target.checked : e.target.value;
@@ -31,13 +31,15 @@ chrome.runtime.onMessage.addListener(function (msg) {
         settings = msg.settings;
         var manifest = chrome.runtime.getManifest();
         document.getElementById('version').textContent = manifest.version_name;
-        document.getElementById('custom').value = settings.custom;
-        document.getElementById('exclude').value = settings.exclude;
-        document.getElementById('passlength').value = settings.passlength;
-        document.getElementById('numbers').checked = settings.numbers;
-        document.getElementById('uppercase').checked = settings.uppercase;
-        document.getElementById('lowercase').checked = settings.lowercase;
+        for(var setting in settings){
+            if(!setting.search(/^(numbers|uppercase|lowercase)$/)){
+                document.getElementById(setting).checked = settings[setting];
+            } else {
+                document.getElementById(setting).value = settings[setting];
+            }
+        }
     } else if (msg.password) {
+        outputElement = document.getElementById('generated_password');
         outputElement.value = msg.password;
         outputElement.focus();
         outputElement.select();
@@ -67,15 +69,16 @@ function sendMessage(msg) {
 
 function getPassword(e) {
     e.preventDefault();
+    e.stopPropagation();
     sendMessage('getPassword');
 }
 
 function showStatus(type, msg) {
-    var el = document.getElementById(type);
-    el.innerHTML = (el.textContent.length) ? '<br>' + msg[type] : msg[type];;
-    setTimeout(function () {
-        error.textContent = '';
-    }, 2000);
-
+    (function(el){
+        el.textContent = msg[type]
+        setTimeout(function () {
+            el.textContent = '';
+        }, 2000);
+    })(document.getElementById(type));
 }
 

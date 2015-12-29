@@ -1,15 +1,15 @@
 {
   "manifest_version": 2,
 
-  "name": "PassWord Generator",
-  "short_name": "PGen",
-  "description": "Easily generate unique random and secure passwords.",
-  "version": "0.9.2",
-  "version_name": "Plurious Fork",
+  "name": "Strong PassWord Generator",
+  "short_name": "Strong PW Gen",
+  "description": "Generate unique random passwords in two ways. First from the menu bar dropdown and automatically saved to clipboard. Or from a context menu that populates all 'password' type inputs.",
+  "version": "1.0",
+  "version_name": "Plurious / Randy Casburn",
   "content_scripts": [
     {
       "matches": ["http://*/*","https://*/*"],
-      "js": ["context.js"]
+      "js": ["content.contextmenu.js"]
     }
   ],
 
@@ -24,7 +24,7 @@
   },
 
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["settings.singleton.js", "password.class.js", "main.js"],
     "persistent": false
   },
 

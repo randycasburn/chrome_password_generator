@@ -1,101 +1,101 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
-  <head>
-    <title>PassGen</title>
+<head>
+    <title>Strong Password Generator</title>
     <style>
-      body {
-        font-family: Roboto, sans-serif;
-        min-width: 275px;
-        font-size: 13px;
-        line-height: 18px;
-        overflow-x: hidden;
-      }
+        body {
+            font-family: Roboto, sans-serif;
+            min-width: 275px;
+            font-size: 13px;
+            line-height: 18px;
+            overflow-x: hidden;
+        }
 
-      apptitle {
-        font-family: Roboto, sans-serif;
-        min-width: 300px;
-        font-size: 14px;
-        overflow-x: hidden;
-        color: #2f414a;
-      }
+        apptitle {
+            font-family: Roboto, sans-serif;
+            min-width: 300px;
+            font-size: 14px;
+            overflow-x: hidden;
+            color: #2f414a;
+        }
 
-      appversion {
-        font-family: Roboto, sans-serif;
-        min-width: 300px;
-        font-size: 14px;
-        line-height: 18px;
-        overflow-x: hidden;
-        color: LightSteelBlue;
-      }
+        appversion {
+            font-family: Roboto, sans-serif;
+            min-width: 300px;
+            font-size: 12px;
+            line-height: 14px;
+            overflow-x: hidden;
+            color: LightSteelBlue;
+            text-decoration: none;
+        }
 
-      hint {
-        font-family: Roboto, sans-serif;
-        min-width: 300px;
-        font-size: 12px;
-        line-height: 18px;
-        overflow-x: hidden;
-        color: SteelBlue;
-      }
+        hint {
+            font-family: Roboto, sans-serif;
+            min-width: 300px;
+            font-size: 12px;
+            line-height: 18px;
+            overflow-x: hidden;
+            color: SteelBlue;
+        }
 
-      error {
-        font-family: Roboto, sans-serif;
-        min-width: 300px;
-        font-size: 12px;
-        line-height: 18px;
-        overflow-x: hidden;
-        color: LightCoral;
-      }
+        error {
+            font-family: Roboto, sans-serif;
+            min-width: 300px;
+            font-size: 12px;
+            line-height: 18px;
+            overflow-x: hidden;
+            color: LightCoral;
+        }
 
-      warning {
-        font-family: Roboto, sans-serif;
-        min-width: 300px;
-        font-size: 12px;
-        line-height: 18px;
-        overflow-x: hidden;
-        color: SandyBrown;
-      }
+        warning {
+            font-family: Roboto, sans-serif;
+            min-width: 300px;
+            font-size: 12px;
+            line-height: 18px;
+            overflow-x: hidden;
+            color: SandyBrown;
+        }
 
-      input#generate {
-        font-weight: bold; width: auto;
-      }
+        input#generate {
+            font-weight: bold;
+            width: auto;
+        }
     </style>
-
-    <!--
-      - JavaScript and HTML must be in separate files: see our Content Security
-      - Policy documentation[1] for details and explanation.
-      -
-      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
-     -->
     <script src="popup.js"></script>
-  </head>
-  <body>
-    <img src="graphic.png" alt="GenPass" style="float:right;width:70px;height:70px;padding: 0px 0px 0px 30px">
-    <form id="genpassword">
-      <p><apptitle for="title">AppGen</apptitle> <appversion id="version"></appversion><br></p>
-      <label><input type="checkbox" id="uppercase" value="uppercase">Upper case characters</label><br>
-      <label><input type="checkbox" id="lowercase" value="lowercase">Lower case characters</label><br>
-      <label><input type="checkbox" id="numbers" value="numbers">Numbers</label><br>
-      <p><label for="passlength">Password length</label><br />
-      <hint>Absolute length (14) or range (10-14)</hint><br />
-      <input type="text" id="passlength" size="10" maxlength="10" value="" /></p>
-      <p><label for="custom">Custom characters</label><br />
-      <input type="text" id="custom" size="30" maxlength="30" value="" /></p>
-      <p><label for="exclude">Exclude characters</label><br />
-      <input type="text" id="exclude" size="30" maxlength="30" value="" /></p>
-      <p>
-        <input id="generate" type="submit" value="Generate Password" />
+</head>
+<body>
+<img src="graphic.png" alt="Strong Passwords" style="float:right;width:70px;height:70px;padding: 0px 0px 0px 30px">
+
+<form id="genpassword">
+    <p>
+        <apptitle for="title">Strong Password Generator</apptitle>
+        <appversion id="version"></appversion>
+        <br></p>
+    <label><input type="checkbox" id="uppercase" value="uppercase">Upper case characters</label><br>
+    <label><input type="checkbox" id="lowercase" value="lowercase">Lower case characters</label><br>
+    <label><input type="checkbox" id="numbers" value="numbers">Numbers</label><br>
+
+    <p><label for="passlength">Password length</label><br/>
+        <hint>Absolute length (14) or range (10-14)</hint>
+        <br/>
+        <input type="text" id="passlength" size="10" maxlength="10" value="" placeholder="10-20" autofocus/></p>
+    <p><label for="custom">Custom characters</label><br/>
+        <input type="text" id="custom" size="30" maxlength="30" value=""/></p>
+
+    <p><label for="exclude">Exclude characters</label><br/>
+        <input type="text" id="exclude" size="30" maxlength="30" value=""/></p>
+
+    <p>
+        <input id="generate" type="submit" value="Generate Password"/>
         <span id="status-display"></span>
-      </p>
-    </form>
-    <input type="text" size=30 id="generated_password" value="" readonly><br>
-    <hint id="status"></hint><br>
-    <error id="error"></error>
-    <warning id="warning"></warning><br>
-  </body>
+    </p>
+</form>
+<input type="text" size=30 id="generated_password" value="" readonly><br>
+<hint id="status"></hint>
+<br>
+<error id="error"></error>
+<warning id="warning"></warning>
+<br>
+</body>
 </html>
 
