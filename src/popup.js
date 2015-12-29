@@ -1,67 +1,81 @@
-var port;
+// Holds view wide settings
 var settings = {};
+// Holds the output element for the generated password
 var outputElement;
-
+/**
+ * Document Load Event listeners
+ *
+ * When document loads set the outputElement, listen for form submit, listen for input changes to update settings
+ *
+ */
 window.addEventListener('load', function () {
     outputElement = document.getElementById('generated_password');
-    document.getElementById('genpassword').addEventListener('submit', generatePassword);
-port = chrome.extension.connect({name: "PasswordGen"});
-port.postMessage("getSettings");
-port.onMessage.addListener(function (msg) {
-    if (msg.constructor === Object) {
-        settings = msg;
+    // Listen for the form submission
+    document.getElementById('genpassword').addEventListener('submit', getPassword);
+    // Record changes to the text settings <inputs>
+    document.addEventListener('change', function (e) {
+        settings[e.target.id] = (e.target.type === 'checkbox') ? e.target.checked : e.target.value;
+        sendMessage({update:settings});
+    });
+});
+/**
+ * Chrome Runtime messaging events
+ *
+ *  On receiving:
+ *    settings - update popup view with new settings
+ *    password - update outputElement with password, copy to clipboard, show status and warning if necessary
+ *    error, warning, or status - show appropriate message by type
+ */
+chrome.runtime.onMessage.addListener(function (msg) {
+    if (msg.settings) {
+        settings = msg.settings;
         var manifest = chrome.runtime.getManifest();
         document.getElementById('version').textContent = manifest.version_name;
-        document.getElementById('custom').value = settings.customChars;
-        document.getElementById('exclude').value = settings.excludeChars;
-        document.getElementById('length').value = settings.passLength;
+        document.getElementById('custom').value = settings.custom;
+        document.getElementById('exclude').value = settings.exclude;
+        document.getElementById('passlength').value = settings.passlength;
         document.getElementById('numbers').checked = settings.numbers;
         document.getElementById('uppercase').checked = settings.uppercase;
         document.getElementById('lowercase').checked = settings.lowercase;
-    } else if (msg.constructor === String) {
-        outputElement.value = msg;
+    } else if (msg.password) {
+        outputElement.value = msg.password;
         outputElement.focus();
         outputElement.select();
-        //document.execCommand('copy');
+        document.execCommand('copy');
         outputElement.blur();
-    } else {
-        outputElement.value = 'Unusable result';
+        showStatus('status', {status: 'Copied to Clipboard'});
+        if (msg.password.length < 8) showStatus('warning', {warning: "Weak Password"});
+    } else if (msg.error) {
+        showStatus('error', msg);
+    } else if (msg.warning) {
+        showStatus('warning', msg);
+    } else if (msg.status) {
+        showStatus('status', msg);
     }
 });
+/**
+ * Initialize the UI by retreiving the settings
+ */
+sendMessage("getSettings");
 
-});
-
-
-
-function generatePassword(e) {
-    e.preventDefault();
-    port.postMessage('getPassword');
+/**
+ * Utility functions for the Popup UI
+ */
+function sendMessage(msg) {
+    chrome.runtime.sendMessage(msg);
 }
 
-function showError(msg) {
-    var error = document.getElementById('error');
-    error.textContent = msg;
+function getPassword(e) {
+    e.preventDefault();
+    sendMessage('getPassword');
+}
+
+function showStatus(type, msg) {
+    var el = document.getElementById(type);
+    el.innerHTML = (el.textContent.length) ? '<br>' + msg[type] : msg[type];;
     setTimeout(function () {
         error.textContent = '';
     }, 2000);
 
-}
-
-function showWarning(msg) {
-    var warning = document.getElementById('warning');
-    warning.textContent = msg;
-    setTimeout(function () {
-        warning.textContent = '';
-    }, 2000);
-}
-
-function updateStatus(message) {
-    if (!self.actionMenu) return;
-    // Update status to let user know options were saved.
-    var status = document.getElementById('status');
-    status.textContent = 'Password copied to clipboard';
-    setTimeout(function () {
-        status.textContent = '';
-    }, 2000);
 }
 

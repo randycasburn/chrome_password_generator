@@ -77,12 +77,12 @@
     <img src="graphic.png" alt="GenPass" style="float:right;width:70px;height:70px;padding: 0px 0px 0px 30px">
     <form id="genpassword">
       <p><apptitle for="title">AppGen</apptitle> <appversion id="version"></appversion><br></p>
-      <input type="checkbox" id="uppercase" value="uppercase">Upper case characters<br>
-      <input type="checkbox" id="lowercase" value="lowercase">Lower case characters<br>
-      <input type="checkbox" id="numbers" value="numbers">Numbers<br>
-      <p><label for="length">Password length</label><br />
+      <label><input type="checkbox" id="uppercase" value="uppercase">Upper case characters</label><br>
+      <label><input type="checkbox" id="lowercase" value="lowercase">Lower case characters</label><br>
+      <label><input type="checkbox" id="numbers" value="numbers">Numbers</label><br>
+      <p><label for="passlength">Password length</label><br />
       <hint>Absolute length (14) or range (10-14)</hint><br />
-      <input type="text" id="length" size="10" maxlength="10" value="" /></p>
+      <input type="text" id="passlength" size="10" maxlength="10" value="" /></p>
       <p><label for="custom">Custom characters</label><br />
       <input type="text" id="custom" size="30" maxlength="30" value="" /></p>
       <p><label for="exclude">Exclude characters</label><br />
