@@ -34,7 +34,7 @@ The differences between these two extensions are based upon what they do.
   - Offers both the icon bar and context menu options
   - Requires access to web pages in order to provide the context menu option.
   
-###[I encourage you to check out PassGen from the Chrome Web Store](https://chrome.google.com/webstore/detail/passgen-password-generato/cfhahkhhdbgkgcpoffcjdiclidcoiaek)
+####[I encourage you to check out PassGen from the Chrome Web Store](https://chrome.google.com/webstore/detail/passgen-password-generato/cfhahkhhdbgkgcpoffcjdiclidcoiaek)
 ------------
 
 ### Developers: The code differences are remarkable and you should check them out. Simply two views of the same problem.
