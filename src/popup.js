@@ -15,7 +15,7 @@ window.addEventListener('load', function () {
     // Record changes to the text settings <inputs>
     document.addEventListener('change', function (e) {
         settings[e.target.id] = (e.target.type === 'checkbox') ? e.target.checked : e.target.value;
-        sendMessage({update:settings});
+        chrome.runtime.sendMessage({update:settings});
     });
 });
 /**
@@ -58,18 +58,10 @@ chrome.runtime.onMessage.addListener(function (msg) {
 /**
  * Initialize the UI by retreiving the settings
  */
-sendMessage("getSettings");
-
-/**
- * Utility functions for the Popup UI
- */
-function sendMessage(msg) {
-    chrome.runtime.sendMessage(msg);
-}
+chrome.runtime.sendMessage("getSettings");
 
 function getPassword(e) {
     e.preventDefault();
-    e.stopPropagation();
     sendMessage('getPassword');
 }
 
