@@ -13,7 +13,7 @@
   * Click the **Generate Password** menu item
   * **Your new password will populate the selected input and all inputs of type "password"**
   
-##[Download the extension from the Chrome Web Store](https://chrome.google.com/webstore)
+##[Download the extension from the Chrome Web Store](https://chrome.google.com/webstore/detail/strong-password-generator/bidjeoolipiiphophdejgfhegampjofi)
 
 ----------------
 
