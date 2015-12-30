@@ -62,7 +62,7 @@ chrome.runtime.sendMessage("getSettings");
 
 function getPassword(e) {
     e.preventDefault();
-    sendMessage('getPassword');
+    chrome.runtime.sendMessage('getPassword');
 }
 
 function showStatus(type, msg) {
